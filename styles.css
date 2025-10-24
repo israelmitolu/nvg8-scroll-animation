@@ -1,0 +1,191 @@
+@import url("https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Cal Sans", sans-serif;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+h1 {
+  font-size: 7vw;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  word-spacing: 0.02em;
+}
+
+.hero-header h1 {
+  font-size: 8vw;
+  font-weight: 900;
+  line-height: 0.9;
+}
+
+p {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+section {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #141414;
+  color: #e3e3db;
+  overflow: hidden;
+}
+
+.hero {
+  flex-direction: column;
+  transition: background-color 0.3s ease;
+}
+
+.hero-header {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  will-change: transform, opacity;
+
+  p {
+    font-size: 1.2rem;
+    font-weight: 300;
+  }
+}
+
+.animated-icons {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  will-change: transform;
+  z-index: 2;
+}
+
+.animated-icon {
+  flex: 1;
+  aspect-ratio: 1;
+  will-change: transform;
+}
+
+.icon-4 {
+  flex: 1.2;
+  aspect-ratio: 1.2;
+}
+
+.icon-4 img {
+  object-fit: contain;
+}
+
+.animated-text {
+  position: relative;
+  max-width: 1000px;
+  text-align: center;
+  color: #141414;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.text-segment {
+  opacity: 0;
+}
+
+.placeholder-icon {
+  margin-top: -10px;
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+  vertical-align: middle;
+  will-change: transform;
+  visibility: hidden;
+}
+
+.credit-footer {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 10;
+  background-color: rgba(20, 20, 20, 0.8);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.credit-footer p {
+  font-size: 0.9rem;
+  color: #e3e3db;
+  margin: 0;
+}
+
+.credit-footer a {
+  color: #e3e3db;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom-color 0.3s ease;
+}
+
+.credit-footer a:hover {
+  border-bottom-color: #e3e3db;
+}
+
+@media (max-width: 1000px) {
+  h1 {
+    font-size: 12vw;
+    text-align: center;
+  }
+
+  .hero-header h1 {
+    font-size: 14vw;
+    font-weight: 900;
+  }
+
+  p {
+    font-size: 1.1rem;
+  }
+
+  .hero-header {
+    top: 45%;
+    width: 100%;
+  }
+
+  .placeholder-icon {
+    margin-top: -4px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .credit-footer {
+    bottom: 0.5rem;
+    right: 0.5rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .credit-footer p {
+    font-size: 0.8rem;
+  }
+}
