@@ -13,11 +13,103 @@ document.addEventListener("DOMContentLoaded", () => {
   gsap.ticker.lagSmoothing(0);
 
   const animatedIcons = document.querySelector(".animated-icons");
-  const iconElements = document.querySelectorAll(".animated-icon");
+  const iconElementsNodeList = document.querySelectorAll(".animated-icon");
+  let iconElements = Array.from(iconElementsNodeList);
   const textSegments = document.querySelectorAll(".text-segment");
   const placeholders = document.querySelectorAll(".placeholder-icon");
   const heroHeader = document.querySelector(".hero-header");
   const heroSection = document.querySelector(".hero");
+
+  let restingAnimation;
+  let scrollTimeout;
+
+  const createRestingAnimation = () => {
+    const tl = gsap.timeline({
+      repeat: -1,
+      paused: true,
+      onRepeat: () => swapIcons(tl),
+    });
+
+    const swapIcons = (timeline) => {
+      if (!timeline) timeline = tl;
+      timeline.clear();
+
+      const iconCount = iconElements.length;
+      if (iconCount < 4) return;
+
+      let i1;
+      let i2;
+      let possibleI2 = [];
+
+      while (possibleI2.length === 0) {
+        i1 = Math.floor(Math.random() * iconCount);
+        const tempPossible = [];
+        for (let i = 0; i < iconCount; i++) {
+          if (Math.abs(i - i1) > 1) {
+            tempPossible.push(i);
+          }
+        }
+        possibleI2 = tempPossible;
+      }
+
+      i2 = possibleI2[Math.floor(Math.random() * possibleI2.length)];
+
+      const icon1 = iconElements[i1];
+      const icon2 = iconElements[i2];
+
+      timeline.to([icon1, icon2], {
+        scale: 0,
+        duration: 0.4,
+        ease: "power2.in",
+      });
+
+      timeline.add(() => {
+        const parent = icon1.parentNode;
+        const icon1NextSibling = icon1.nextSibling;
+        const icon2NextSibling = icon2.nextSibling;
+
+        if (icon1NextSibling === icon2) {
+          parent.insertBefore(icon2, icon1);
+        } else if (icon2NextSibling === icon1) {
+          parent.insertBefore(icon1, icon2);
+        } else {
+          parent.insertBefore(icon2, icon1NextSibling);
+          parent.insertBefore(icon1, icon2NextSibling);
+        }
+
+        iconElements = Array.from(parent.querySelectorAll(".animated-icon"));
+      });
+
+      timeline.to([icon1, icon2], {
+        scale: 1,
+        duration: 0.4,
+        ease: "power2.out",
+      });
+
+      timeline.to({}, { duration: 1 });
+    };
+
+    swapIcons(tl);
+    return tl;
+  };
+
+  restingAnimation = createRestingAnimation();
+
+  if (lenis.scroll === 0) {
+    restingAnimation.play();
+  }
+
+  lenis.on("scroll", (e) => {
+    if (restingAnimation.isPlaying()) {
+      restingAnimation.pause();
+    }
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      if (e.scroll === 0) {
+        restingAnimation.play();
+      }
+    }, 150);
+  });
 
   const textAnimationOrder = [];
   textSegments.forEach((segment, index) => {
